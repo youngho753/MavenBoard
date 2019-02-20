@@ -1,0 +1,69 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<!-- bootstrap -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
+<script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+<title>회원가입</title>
+
+<style>
+	#container{
+		margin : 0 auto;
+	}
+</style>
+<script>
+	$(document).ready(function() {
+			$("#update").onclick(function(){
+				$("#form").method = "post"; 
+				$("#form").target = "_self";
+				$("#form").action = "update";
+				$("#form").submit();
+			});
+			$("#delete").onclick(function(){
+				$("#form").method = "post"; 
+				$("#form").target = "_self";
+				$("#form").action = "delete";
+				$("#form").submit();
+			});
+		});
+</script>
+
+</head>
+<body>
+	<div id="container"></div>
+	<h1>상세보기</h1>
+	<hr>
+	<form id="form" method="post">
+		<table class="table table-striped">
+			<input type = "hidden" name = "seq" value = "${board.seq }">
+			<tr>
+				<td>제목</td>
+				<td><input type = "text" name = "title" class = "form-control" value = "${board.title }"></td>
+			</tr>
+			<tr>
+				<td>작성자</td>
+				<td><input type = "text" name = "writer" class = "form-control" value = "${board.writer }"></td>
+			</tr>
+			<tr>
+				<td>비밀번호</td>
+				<td><input type = "password" name = "password" class = "form-control" ></td>
+			</tr>
+			<tr>
+				<td colspan = "2"><textarea rows="5" cols="40" name = "content" class = "form-control">${board.content }</textarea></td>
+			</tr>
+			<tr>
+			<td><input type = "button" id = "update" class = "btn btn-primary">수정하기</td>
+			<td><input type = "button" id = "delete" class= "btn btn-primary">삭제하기</td>
+			</tr>
+			<tr>
+			<td colspan = "2">
+				<a href = "getList" class = "btn btn-primary">목록으로</a> 
+			</tr>
+		</table>
+	</form>
+
+</body>
+</html>
