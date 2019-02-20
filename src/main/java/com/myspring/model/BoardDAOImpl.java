@@ -1,5 +1,6 @@
 package com.myspring.model;
 
+import java.util.HashMap;
 import java.util.List;
 
 import org.apache.ibatis.session.SqlSession;
@@ -24,38 +25,39 @@ public class BoardDAOImpl implements BoardDAO{
 
 	@Override
 	public void boardInsert(String sqlid, BoardDTO board) {
+
 		sqlMap.insert(sqlid,board);
 		
 	}
 
 	@Override
 	public void boardUpdate(String sqlid, BoardDTO board) {
-		// TODO Auto-generated method stub
+		sqlMap.update(sqlid,board);
+	}
+
+	@Override
+	public void boardDelete(String sqlid, int seq) {
+		sqlMap.delete(sqlid,seq);
 		
 	}
 
 	@Override
-	public void boardDelete(String sqlid) {
-		// TODO Auto-generated method stub
+	public BoardDTO boardDetail(String sqlid, int seq) {
+		return sqlMap.selectOne(sqlid,seq);
+	}
+
+	@Override
+	public int boardPwCheck(String sqlid, int seq,String password) {
+		HashMap<String, String> map = new HashMap<>();
+		map.put("seq", seq+"");
+		map.put("password", password);
 		
-	}
-
-	@Override
-	public BoardDTO boardDetail(String sqlid, int id) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public int boardPwCheck(String sqlid, String pw) {
-		// TODO Auto-generated method stub
-		return 0;
+		return sqlMap.selectOne(sqlid,map);
 	}
 
 	@Override
 	public int boardCount(String sqlid) {
-		// TODO Auto-generated method stub
-		return 0;
+		return sqlMap.selectOne(sqlid);
 	}
 
 

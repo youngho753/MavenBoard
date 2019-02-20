@@ -1,3 +1,4 @@
+@@ -0,0 +1,47 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -34,7 +35,7 @@
 				<td><input type = "password" name = "password" class = "form-control"></td>
 			</tr>
 			<tr>
-				<td colspan = "2"><textarea rows="5" cols="40" name = "content" class = "form-control"> ></textarea></td>
+				<td colspan = "2"><textarea rows="5" cols="40" name = "content" class = "form-control"></textarea></td>
 			</tr>
 			<tr>
 			<td><input type = "submit" value = "글쓰기"></td>
@@ -42,6 +43,7 @@
 			</tr>
 		</table>
 	</form>
+	
 
 </body>
 </html>

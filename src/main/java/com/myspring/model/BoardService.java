@@ -16,6 +16,22 @@ public class BoardService {
 	public List<BoardDTO> getList() {
 		return bDao.getList("getList");
 	}
-
+	public BoardDTO boardDetail(int seq) {
+		return bDao.boardDetail("boardDetail", seq);
+	}
+	public int boardPwCheck(int seq,String pw) {
+		return bDao.boardPwCheck("boardPwCheck", seq,pw);
+		
+	}
+	public void boardUpdate(BoardDTO board) {
+		bDao.boardUpdate("boardUpdate", board);
+		
+	}
+	public void boardDelete(int seq) {
+		bDao.boardDelete("boardDelete", seq);
+	}
+	public int boardCount() {
+		return bDao.boardCount("boardCount");
+	}
 
 }

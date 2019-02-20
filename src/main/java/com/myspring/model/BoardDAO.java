@@ -15,9 +15,9 @@ public interface BoardDAO {
 	public List<BoardDTO> getSearchList(String sqlid,String word);
 	public void boardInsert(String sqlid,BoardDTO board);
 	public void boardUpdate(String sqlid,BoardDTO board);
-	public void boardDelete(String sqlid);
-	public BoardDTO boardDetail(String sqlid,int id);
-	public int boardPwCheck(String sqlid,String pw);
+	public void boardDelete(String sqlid,int seq);
+	public BoardDTO boardDetail(String sqlid,int seq);
+	public int boardPwCheck(String sqlid,int seq,String password);
 	public int boardCount(String sqlid);
 	
 }

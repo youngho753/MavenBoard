@@ -20,12 +20,39 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<!-- 추가 -->
 	<insert id = "boardInsert" parameterType="boardDTO">
 		insert into springboard(seq,title,content,writer,regdate,hitcount,password,groups,levels,steps) 
-		values(springboard_seq.nextval,#{title},#{content},#{writer},sysdate,0,#{password},#{title},0,0)
+		values(springboard_seq.nextval,#{title},#{content},#{writer},sysdate,0,#{password},board_seq.nextval,0,0)
 	</insert>
 	<!-- 리스트 -->
-	<select id = "getList" resultType = "boardDTO">
-		select * from springboard
+	<select id = "getList" parameterType = "hashmap" resultType = "boardDTO">
+		select * from 
+		(select rownum rn,aa.* 
+		from 
+			(select * 
+			from board 
+			order by groups desc,steps asc)aa
+			) 
+		where rn>=1 and rn<=5
 	</select>
+	<!-- 상세보기 -->
+	<select id = "boardDetail" parameterType = "Integer" resultType = "boardDTO">
+		select * from springboard where seq = #{seq}
+	</select>
+	<select id = "boardPwCheck" parameterType = "hashmap" resultType = "Integer">
+		SELECT
+			DECODE(password,#{password},1,0)
+		FROM springboard
+		where seq = #{seq}
+	</select>
+	<update id="boardUpdate">
+		update springboard set title=#{title},content=#{content},writer=#{writer} where seq = #{seq}
+	</update>
+	<update id="boardDelete" parameterType = "Integer">
+		delete from springboard where seq = #{seq}
+	</update>
+	<select id = "boardCount">
+		select count(seq) from springboard 
+	</select>
+	
 	<!-- 검색하기 -->
 	<!-- <select id = "search" parameterType="java.util.Map" resultType ="boardDTO">
 		select * from springmember  <include refid="searchWhere"/>
