@@ -1,5 +1,6 @@
 package com.myspring.model;
 
+import java.util.HashMap;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,8 +14,8 @@ public class BoardService {
 	public void insert(BoardDTO board) {
 		bDao.boardInsert("boardInsert", board);
 	}
-	public List<BoardDTO> getList() {
-		return bDao.getList("getList");
+	public List<BoardDTO> getList(HashMap<String,String> map) {
+		return bDao.getList("getList",map);
 	}
 	public BoardDTO boardDetail(int seq) {
 		return bDao.boardDetail("boardDetail", seq);
@@ -30,8 +31,8 @@ public class BoardService {
 	public void boardDelete(int seq) {
 		bDao.boardDelete("boardDelete", seq);
 	}
-	public int boardCount() {
-		return bDao.boardCount("boardCount");
+	public int boardCount(HashMap<String,String> map) {
+		return bDao.boardCount("boardCount",map);
 	}
 
 }

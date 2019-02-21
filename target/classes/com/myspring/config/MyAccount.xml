@@ -5,22 +5,22 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
 <mapper namespace="com.myspring.config.MyAccount.xml">
 	
-	<!-- <sql id="searchWhere"> 중복되는 sql문을 하나로 정의해서 중복을 피하도록 만들어 준다
+	<sql id="searchWhere"> <!-- 중복되는 sql문을 하나로 정의해서 중복을 피하도록 만들어 준다 -->
 	<where>
-			<if test="word != null and field=='name'">
-			name like '%'||#{word}||'%'
+			<if test="word != null and field=='title'">
+			title like '%'||#{word}||'%'
 			</if>
 			
-			<if test="word != null and field=='id'">
-			id like '%${word}%'
+			<if test="word != null and field=='writer'">
+			writer like '%${word}%'
 			</if>
-		</where>`	
-	</sql> -->
+		</where>	
+	</sql>
 
 	<!-- 추가 -->
 	<insert id = "boardInsert" parameterType="boardDTO">
 		insert into springboard(seq,title,content,writer,regdate,hitcount,password,groups,levels,steps) 
-		values(springboard_seq.nextval,#{title},#{content},#{writer},sysdate,0,#{password},board_seq.nextval,0,0)
+		values(springboard_seq.nextval,#{title},#{content},#{writer},sysdate,0,#{password},springboard_seq.nextval,0,0)
 	</insert>
 	<!-- 리스트 -->
 	<select id = "getList" parameterType = "hashmap" resultType = "boardDTO">
@@ -28,10 +28,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		(select rownum rn,aa.* 
 		from 
 			(select * 
-			from board 
-			order by groups desc,steps asc)aa
+			from springboard 
+			<include refid="searchWhere"/>
+			order by TO_NUMBER(groups) desc,steps asc)aa
 			) 
-		where rn>=1 and rn<=5
+		where rn>=#{startRow} and rn&lt;=#{endRow}
 	</select>
 	<!-- 상세보기 -->
 	<select id = "boardDetail" parameterType = "Integer" resultType = "boardDTO">
@@ -49,8 +50,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<update id="boardDelete" parameterType = "Integer">
 		delete from springboard where seq = #{seq}
 	</update>
-	<select id = "boardCount">
-		select count(seq) from springboard 
+	<select id = "boardCount" parameterType = "hashmap" resultType = "Integer">
+		select count(seq) from springboard <include refid="searchWhere"/>
 	</select>
 	
 	<!-- 검색하기 -->

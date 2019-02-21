@@ -1,15 +1,12 @@
 package com.myspring.board;
 
-import java.io.IOException;
-import java.io.PrintWriter;
 import java.text.DateFormat;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 
 import javax.annotation.Resource;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -62,11 +59,56 @@ public class HomeController {
 		}
 		
 		@RequestMapping(value = "getList")
-		public String getList(Model model) {
-			List<BoardDTO> boardList = bService.getList();
-			int currentPage;
+		public String getList(Model model,String pageNum,String word,String field) {
+			HashMap<String,String> map = new HashMap<>();
+			//검색일때
+			if(word != null) {
+				if(field.equals("title"))map.put("field", "title");
+				else map.put("field","writer");
+				map.put("word",word);
+				//검색아닐때
+				if(word =="dlrjsdksla") {
+					map.put("field","title");
+					map.put("word","");
+					word = "dlrjsdksla";
+					field = "title";
+				}
+			}else {
+				map.put("field","title");
+				map.put("word","");
+				word = "dlrjsdksla";
+				field = "title";
+			}
+			//페이징
+			if(pageNum == null)pageNum = "1";
+			int currentPage = Integer.parseInt(pageNum);
+			int count = bService.boardCount(map);
+			int pageSize = 5;
 			
+			int startRow= 1+(currentPage*pageSize-pageSize);
+			int endRow = currentPage*pageSize;
+			//총페이지수
+			int totPage = count/pageSize+(count%pageSize==0?0:1);
+			int blockPage =3; //[이전] 456 [다음]
+			int startPage=((currentPage-1)/blockPage)*blockPage+1;
+			int endPage=startPage+blockPage-1;
+			
+			if(endPage > totPage) endPage=totPage;
+			
+			
+			map.put("startRow", startRow+"");
+			map.put("endRow", endRow+"");
+			
+			List<BoardDTO> boardList = bService.getList(map);
+			
+			model.addAttribute("word",word);
+			model.addAttribute("field",field);
+			model.addAttribute("startPage",startPage);
+			model.addAttribute("endPage",endPage);
+			model.addAttribute("blockPage",blockPage);
+			model.addAttribute("totPage",totPage);
 			model.addAttribute("boardList",boardList);
+			
 			return "boardList";
 		}
 	
@@ -99,9 +141,5 @@ public class HomeController {
 			else{
 				return "redirect:getList";
 			}
-		}
-		@RequestMapping("boardCount")
-		public int boardCount() {
-			return bService.boardCount();
 		}
 }

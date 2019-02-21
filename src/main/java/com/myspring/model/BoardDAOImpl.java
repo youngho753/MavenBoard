@@ -13,8 +13,8 @@ public class BoardDAOImpl implements BoardDAO{
 	private SqlSession sqlMap;
 	
 	@Override
-	public List<BoardDTO> getList(String sqlid) {
-		return sqlMap.selectList(sqlid);
+	public List<BoardDTO> getList(String sqlid,HashMap<String,String> map) {
+		return sqlMap.selectList(sqlid,map);
 	}
 
 	@Override
@@ -25,7 +25,6 @@ public class BoardDAOImpl implements BoardDAO{
 
 	@Override
 	public void boardInsert(String sqlid, BoardDTO board) {
-
 		sqlMap.insert(sqlid,board);
 		
 	}
@@ -56,8 +55,8 @@ public class BoardDAOImpl implements BoardDAO{
 	}
 
 	@Override
-	public int boardCount(String sqlid) {
-		return sqlMap.selectOne(sqlid);
+	public int boardCount(String sqlid,HashMap<String,String> map) {
+		return sqlMap.selectOne(sqlid,map);
 	}
 
 
