@@ -43,7 +43,7 @@ function getData(field,word,pageNum){
 		<div id = "page">
 		<!-- 이전 -->
 			<c:if test="${startPage>blockPage }">
-				<a href="javascript:getData(${field },${word},${startPage-blockPage })">[이전]</a>
+				<a href="javascript:getData('${field }','${word }',${startPage-blockPage })">[이전]</a>
 			</c:if>
 			<!-- 페이지출력 -->
 			<c:forEach begin="${startPage }" end="${endPage }" var="i">
@@ -51,12 +51,12 @@ function getData(field,word,pageNum){
 					${i }
 				</c:if>
 				<c:if test="${currentPage ne i}" >
-					<a href="javascript:getData(${field },${word},${i })">${i }</a>
+					<a href="javascript:getData('${field }','${word }',${i })">${i }</a>
 				</c:if>
 			</c:forEach>
 			<!-- 다음 -->
 			<c:if test="${endPage<totPage }">
-				<a href="javascript:getData(${field },${word},${endPage+1 })">[다음]</a>
+				<a href="javascript:getData('${field }','${word }',${endPage+1 })">[다음]</a>
 			</c:if>
 		</div>
 		<div id = "search">

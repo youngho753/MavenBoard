@@ -63,20 +63,22 @@ public class HomeController {
 			HashMap<String,String> map = new HashMap<>();
 			//검색일때
 			if(word != null) {
+				if(word == "tmvmfld") {
+					map.put("field","title");
+					map.put("word","");
+					word = "tmvmfld";
+					field = "title";
+				}
+				else {
 				if(field.equals("title"))map.put("field", "title");
 				else map.put("field","writer");
 				map.put("word",word);
-				//검색아닐때
-				if(word =="dlrjsdksla") {
-					map.put("field","title");
-					map.put("word","");
-					word = "dlrjsdksla";
-					field = "title";
 				}
+				//검색아닐때
 			}else {
 				map.put("field","title");
 				map.put("word","");
-				word = "dlrjsdksla";
+				word = "tmvmfld";
 				field = "title";
 			}
 			//페이징
