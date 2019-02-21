@@ -34,5 +34,8 @@ public class BoardService {
 	public int boardCount(HashMap<String,String> map) {
 		return bDao.boardCount("boardCount",map);
 	}
-
+	public void boardReply(BoardDTO board) {
+		bDao.reInsert("replyInsert", board);
+		bDao.steps("maxStep", board);
+	}
 }

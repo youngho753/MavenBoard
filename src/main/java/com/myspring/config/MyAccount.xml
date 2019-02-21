@@ -22,6 +22,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		insert into springboard(seq,title,content,writer,regdate,hitcount,password,groups,levels,steps) 
 		values(springboard_seq.nextval,#{title},#{content},#{writer},sysdate,0,#{password},springboard_seq.nextval,0,0)
 	</insert>
+	<insert id="replyInsert" parameterType="boardDTO">
+		insert into 
+		springboard(seq,title,content,writer,regdate,hitcount,password,groups,levels,steps) 
+		values(springboard_seq.nextval,#{title},#{content},#{writer},sysdate,0,#{password},#{groups},#{levels}+1,#{steps}+1)
+	</insert>
 	<!-- 리스트 -->
 	<select id = "getList" parameterType = "hashmap" resultType = "boardDTO">
 		select * from 
@@ -53,7 +58,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<select id = "boardCount" parameterType = "hashmap" resultType = "Integer">
 		select count(seq) from springboard <include refid="searchWhere"/>
 	</select>
-	
+	<update id="maxStep" parameterType="boardDTO">
+		update springboard
+		set steps=#{steps}+1
+		where groups=#{seq} and steps != 0
+	</update>
 	<!-- 검색하기 -->
 	<!-- <select id = "search" parameterType="java.util.Map" resultType ="boardDTO">
 		select * from springmember  <include refid="searchWhere"/>

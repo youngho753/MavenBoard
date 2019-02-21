@@ -59,5 +59,12 @@ public class BoardDAOImpl implements BoardDAO{
 		return sqlMap.selectOne(sqlid,map);
 	}
 
+	
+	public void reInsert(String sqlid, BoardDTO board) {
+		sqlMap.insert(sqlid, board);
+	}
+	public void steps(String sqlid, BoardDTO board) {
+		sqlMap.update(sqlid, board);
+	}
 
 }

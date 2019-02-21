@@ -12,6 +12,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
@@ -113,7 +115,18 @@ public class HomeController {
 			
 			return "boardList";
 		}
-	
+		@GetMapping("reply")
+		public String reply(int groups, int levels, int steps,Model model) {
+			model.addAttribute("groups",groups);
+			model.addAttribute("levels",levels);
+			model.addAttribute("steps",steps);
+			return "boardReply";
+		}
+		@PostMapping("reply")
+		public String replys(BoardDTO board) {
+			bService.boardReply(board);
+			return "redirect:getList";
+		}
 		@RequestMapping(value = "detail")
 		public String detail(Model model,int seq) {
 			BoardDTO board = bService.boardDetail(seq);

@@ -56,7 +56,8 @@
 			</tr>
 			<tr>
 			<td>
-			<td><input type = "button" id = "" value = "답글쓰기" class = "btn btn-primary"></td>
+			<td><input type = "button" id = "reply" value = "답글쓰기" class = "btn btn-primary"
+			onclick="location='reply?groups=${board.groups }&levels=${board.levels }&steps=${board.steps }'"></td>
 				<td><a href = "getList" class = "btn btn-primary">목록으로</a></td> 
 			</tr>
 		</table>
